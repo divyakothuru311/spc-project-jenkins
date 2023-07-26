@@ -37,9 +37,13 @@ pipeline {
                     deployerId: "SPC_DEPLOYER"
                 )
             } 
+        }
+         stage ('Publish build info') {
+            steps {
                 rtPublishBuildInfo (
                     serverId: "JFROG_INSTANCE"
-                )        
+                )
+            } 
         }
        
         stage('report') {
