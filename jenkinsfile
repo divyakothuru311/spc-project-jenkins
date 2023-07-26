@@ -19,10 +19,29 @@ pipeline {
         }    
         stage('build and package') {
             steps {
-                sh script : 'mvn package'
-
+                rtMavenDeployer (
+                    id: "SPC_DEPLOYER",
+                    serverId: "JFROG_INSTANCE",
+                    releaseRepo: 'spc-libs-release',
+                    snapshotRepo: 'spc-libs-snapshot'
+                )
             }        
         }    
+        
+        stage('exexute maven') {
+             steps {
+                rtMavenRun (
+                    tool: maven // Tool name from Jenkins configuration
+                    pom: 'pom.xml',
+                    goals: 'clean install',
+                    deployerId: "SPC_DEPLOYER",
+                )
+            } 
+                rtPublishBuildInfo (
+                    serverId: "JFROG_INSTANCE"
+                )        
+        }
+       
         stage('report') {
             steps {
                 archiveArtifacts artifacts: '**/target/spring-petclinic-*.jar'
