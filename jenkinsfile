@@ -25,18 +25,18 @@ pipeline {
         }    
         stage('report') {
             steps {
-                archiveArtifacts artifacts: '**/target/spring-petclinic-*.jar'
+                archiveArtifacts artifacts: '**/target/spring-petclinic-*.jar',
                 junit testResults: '**/target/surefire-reports/TEST-*.xml'
             }
         }
     }
     post {
         success {
-            mail subject: 'regarding build status'
+            mail subject: 'regarding build status',
                  body: 'your build is success'
         }
         failure {
-            mail subject: 'regarding build status'
+            mail subject: 'regarding build status',
                  body: 'your build is failure'
         }
 
