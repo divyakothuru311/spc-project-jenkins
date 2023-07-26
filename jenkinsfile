@@ -33,11 +33,13 @@ pipeline {
     post {
         success {
             mail subject: 'regarding build status',
-                 body: 'your build is success'
+                 body: 'your build is success',
+                 to: 'spcproject@devops.com'
         }
         failure {
             mail subject: 'regarding build status',
-                 body: 'your build is failure'
+                 body: 'your build is failure',
+                 to: 'spcproject@devops.com'
         }
 
     }
