@@ -48,8 +48,7 @@ pipeline {
         stage('SonarQube analysis') {
             steps {
                 withSonarQubeEnv('SONARCLOUD') {
-                          sh 'mvn clean package sonar:sonar \
-                          -Dsonar.organization=spring application \
+                          sh 'mvn clean package sonar:sonar -Dsonar.organization=spring application \
                           -Dsonar.token=087ddb8e4a3a41d38aac3d0c506c588cc58e383f \
                           -Dsonar.host.url=https://sonarcloud.io \
                           -Dsonar.projectKey=sonar-spring-application_sonar-spring'
@@ -58,11 +57,11 @@ pipeline {
         }
            
    
-        stage('report') {
-            steps {
-                junit testResults: '**/target/surefire-reports/TEST-*.xml'
-            }
-        }
+        // stage('report') {
+        //     steps {
+        //          junit testResults: '**/target/surefire-reports/TEST-*.xml'
+        //     }
+        // }
     }
     post {
         success {
