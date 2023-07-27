@@ -38,17 +38,27 @@ pipeline {
                 )
             } 
         }
-         stage ('Publish build info') {
+        stage('Publish build info') {
             steps {
                 rtPublishBuildInfo (
                     serverId: "JFROG_INSTANCE"
                 )
             } 
         }
-       
+        stage('SonarQube analysis') {
+            steps {
+                withSonarQubeEnv('SonarCloud') {
+                          sh '''mvn clean package sonar:sonar \
+                          -Dsonar.organization=sonar_spc \
+                          -Dsonar.token=8b69015d978332e260f237cb7747a5225e0ec92a \
+                          -Dsonar.projectKey=sonar-spc_spring-pet-clinic-sonar'''
+                }
+            }    
+        }
+           
+   
         stage('report') {
             steps {
-                archiveArtifacts artifacts: '**/target/spring-petclinic-*.jar'
                 junit testResults: '**/target/surefire-reports/TEST-*.xml'
             }
         }
