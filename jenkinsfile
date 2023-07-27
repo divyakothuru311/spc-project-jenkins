@@ -48,10 +48,11 @@ pipeline {
         stage('SonarQube analysis') {
             steps {
                 withSonarQubeEnv('SonarCloud') {
-                          sh '''mvn clean package sonar:sonar \
+                          sh 'mvn clean package sonar:sonar \
                           -Dsonar.organization=sonar_spc \
                           -Dsonar.token=8b69015d978332e260f237cb7747a5225e0ec92a \
-                          -Dsonar.projectKey=sonar-spc_spring-pet-clinic-sonar'''
+                          -Dsonar.host.url=https://sonarcloud.io \
+                          -Dsonar.projectKey=sonar-spc_spring-pet-clinic-sonar'
                 }
             }    
         }
