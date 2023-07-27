@@ -54,11 +54,11 @@ pipeline {
         }
            
    
-        // stage('report') {
-        //     steps {
-        //          junit testResults: '**/target/surefire-reports/TEST-*.xml'
-        //     }
-        // }
+        stage('report') {
+            steps {
+                junit testResults: '**/target/surefire-reports/TEST-*.xml'
+             }
+         }
     }
     post {
         success {
